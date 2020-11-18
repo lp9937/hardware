@@ -1,0 +1,14 @@
+hardware:
+  service-node: SERVER_ROOT   #硬件服务器
+  netty:
+    tcp-list:
+      - boss-thread-num: 2
+        worker-thread-num: 4
+        options:
+          address: 10.10.20.87
+          port: 6111
+          serviceId: charging-pile
+          hardware-type: 0
+logging:
+  level:
+    root: info
