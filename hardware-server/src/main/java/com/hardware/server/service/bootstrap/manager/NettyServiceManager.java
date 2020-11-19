@@ -1,13 +1,12 @@
 package com.hardware.server.service.bootstrap.manager;
 
-import com.hardware.common.constant.ThreadNamePrefix;
 import com.hardware.common.factory.ThreadNameFactory;
 import com.hardware.common.utils.SpringUtils;
 import com.hardware.server.service.netty.AbstractNettyServerService;
+import com.hardware.server.service.netty.register.MessageRegistryService;
 import com.hardware.server.service.netty.tcp.NettyTcpServerService;
 import com.hardware.server.service.netty.tcp.channel.NettyTcpServerChannelInitializer;
 import com.hardware.server.service.property.HardwareProperties;
-import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.BeanFactory;
@@ -23,12 +22,12 @@ import java.util.Map;
 @Slf4j
 @Component
 public class NettyServiceManager {
-//    private static final String bossThreadName= ThreadNamePrefix.NETTY_TCP_BOSS;
-//    private static final String workerThreadName=ThreadNamePrefix.NETTY_TCP_WORKER;
     @Autowired
     private HardwareProperties hardwareProperties;
     @Autowired
     private BeanFactory beanFactory;
+    @Autowired
+    private MessageRegistryService messageRegistryService;
     private final Map<String, AbstractNettyServerService> nettyServerServiceMap=new HashMap<>();
 
     @PostConstruct

@@ -1,7 +1,7 @@
 package com.hardware.server.service;
 
-import com.hardware.common.enums.HardwareType;
+import com.hardware.common.enums.HardwareEnum;
 
 public interface IHardwareType {
-    HardwareType getHardwareType();
+    HardwareEnum getHardwareType();
 }

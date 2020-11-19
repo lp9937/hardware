@@ -10,8 +10,18 @@ public abstract class AbstractNettyMessage<H extends NettyMessageHead,B extends 
         return messageHead;
     }
 
+    public AbstractNettyMessage<H,B> setMessageHead(H messageHead){
+        this.messageHead=messageHead;
+        return this;
+    }
+
     @Override
     public B getMessageBody() {
         return messageBody;
+    }
+
+    public AbstractNettyMessage<H,B> setMessageBody(B messageBody){
+        this.messageBody=messageBody;
+        return this;
     }
 }

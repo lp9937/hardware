@@ -1,6 +1,6 @@
 package com.hardware.server.service.charging.message;
 
-import com.hardware.common.enums.HardwareType;
+import com.hardware.common.enums.HardwareEnum;
 import com.hardware.server.service.netty.message.AbstractNettyMessage;
 
 /**
@@ -10,8 +10,8 @@ import com.hardware.server.service.netty.message.AbstractNettyMessage;
 public class ChargingPileMessage<B extends ChargingPileMessageBody> extends
         AbstractNettyMessage<ChargingPileMessageHead,B> {
     @Override
-    public HardwareType getHardwareType() {
-        return HardwareType.CHARGING_PILE;
+    public HardwareEnum getHardwareType() {
+        return HardwareEnum.CHARGING_PILE;
     }
 
     /**

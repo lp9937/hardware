@@ -1,7 +1,12 @@
 package com.hardware.server.service.charging.message.body.request;
 
+import com.hardware.common.annotation.MessageRegister;
+import com.hardware.common.enums.CommandEnum;
+import com.hardware.common.enums.HardwareEnum;
 import com.hardware.server.service.charging.message.ChargingPileMessageBody;
+import io.netty.buffer.ByteBuf;
 
+@MessageRegister(command = CommandEnum.SIGN_CMD)
 public class SignInRequestMessageBody extends ChargingPileMessageBody {
     /**
      * 预留字段
@@ -228,5 +233,15 @@ public class SignInRequestMessageBody extends ChargingPileMessageBody {
 
     public void setReserve7(byte[] reserve7) {
         this.reserve7 = reserve7;
+    }
+
+    @Override
+    public Object decoder(ByteBuf byteBuf) {
+        return null;
+    }
+
+    @Override
+    public HardwareEnum getHardwareType() {
+        return null;
     }
 }

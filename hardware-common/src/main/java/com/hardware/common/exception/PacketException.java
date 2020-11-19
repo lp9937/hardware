@@ -1,30 +1,32 @@
 package com.hardware.common.exception;
 
+import com.hardware.common.enums.IBaseEnum;
+
 /**
  * 自定义数据包异常
  * Created by lp on 2020/11/18
  */
 public class PacketException extends RuntimeException {
-    private IErrorCode errorCode;
+    private IBaseEnum exceptionCode;
 
-    public ApiException(IErrorCode errorCode) {
-        super(errorCode.getMessage());
-        this.errorCode = errorCode;
+    public PacketException(IBaseEnum exceptionCode) {
+        super(exceptionCode.getDesc());
+        this.exceptionCode = exceptionCode;
     }
 
-    public ApiException(String message) {
+    public PacketException(String message) {
         super(message);
     }
 
-    public ApiException(Throwable cause) {
+    public PacketException(Throwable cause) {
         super(cause);
     }
 
-    public ApiException(String message, Throwable cause) {
+    public PacketException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public IErrorCode getErrorCode() {
-        return errorCode;
+    public IBaseEnum getExceptionCode(){
+        return exceptionCode;
     }
 }

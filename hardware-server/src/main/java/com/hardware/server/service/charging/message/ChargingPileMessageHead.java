@@ -1,7 +1,9 @@
 package com.hardware.server.service.charging.message;
 
+import com.hardware.common.enums.HardwareEnum;
 import com.hardware.server.service.charging.constant.MessageFieldConst;
 import com.hardware.server.service.netty.message.NettyMessageHead;
+import io.netty.buffer.ByteBuf;
 
 /**
  * Created by lp on 2020/11/17
@@ -77,5 +79,16 @@ public class ChargingPileMessageHead extends NettyMessageHead {
 
     public void setCommandType(short commandType) {
         this.commandType = commandType;
+    }
+
+    @Override
+    public ChargingPileMessageHead decoder(ByteBuf byteBuf) {
+
+        return this;
+    }
+
+    @Override
+    public HardwareEnum getHardwareType() {
+        return HardwareEnum.CHARGING_PILE;
     }
 }

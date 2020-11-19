@@ -11,5 +11,4 @@ public class HardwareServerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HardwareServerApplication.class, args);
 	}
-
 }

@@ -1,7 +1,12 @@
 package com.hardware.server.service.charging.message.body.response;
 
+import com.hardware.common.annotation.MessageRegister;
+import com.hardware.common.enums.CommandEnum;
+import com.hardware.common.enums.HardwareEnum;
 import com.hardware.server.service.charging.message.ChargingPileMessageBody;
+import io.netty.buffer.ByteBuf;
 
+@MessageRegister(command = CommandEnum.HEARTBEAT_RESPONSE_CMD)
 public class HeartbeatResponseMessageBody extends ChargingPileMessageBody {
     /**
      * 预留字段
@@ -38,5 +43,15 @@ public class HeartbeatResponseMessageBody extends ChargingPileMessageBody {
 
     public void setAck(short ack) {
         this.ack = ack;
+    }
+
+    @Override
+    public Object decoder(ByteBuf byteBuf) {
+        return null;
+    }
+
+    @Override
+    public HardwareEnum getHardwareType() {
+        return null;
     }
 }

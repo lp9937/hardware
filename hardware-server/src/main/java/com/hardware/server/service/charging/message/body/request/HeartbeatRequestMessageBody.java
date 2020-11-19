@@ -1,7 +1,12 @@
 package com.hardware.server.service.charging.message.body.request;
 
+import com.hardware.common.annotation.MessageRegister;
+import com.hardware.common.enums.CommandEnum;
+import com.hardware.common.enums.HardwareEnum;
 import com.hardware.server.service.charging.message.ChargingPileMessageBody;
+import io.netty.buffer.ByteBuf;
 
+@MessageRegister(command = CommandEnum.HEARTBEAT_CMD)
 public class HeartbeatRequestMessageBody extends ChargingPileMessageBody {
     /**
      * 预留字段
@@ -41,5 +46,15 @@ public class HeartbeatRequestMessageBody extends ChargingPileMessageBody {
 
     public void setSerialNumber(short serialNumber) {
         SerialNumber = serialNumber;
+    }
+
+    @Override
+    public Object decoder(ByteBuf byteBuf) {
+        return null;
+    }
+
+    @Override
+    public HardwareEnum getHardwareType() {
+        return null;
     }
 }

@@ -1,17 +1,17 @@
 package com.hardware.common.enums;
 
-public enum HardwareType {
+public enum HardwareEnum implements IBaseEnum<Integer> {
     CHARGING_PILE(0,"充电桩")
 
     ;
 
-    HardwareType(int code,String desc){
+    HardwareEnum(int code, String desc){
         this.code=code;
         this.desc=desc;
     }
 
-    public static HardwareType getInstance(int code){
-        for (HardwareType type:values()) {
+    public static HardwareEnum getInstance(int code){
+        for (HardwareEnum type:values()) {
             if(type.getCode()==code){
                 return type;
             }
@@ -21,7 +21,7 @@ public enum HardwareType {
 
     private int code;
     private String desc;
-    public int getCode(){
+    public Integer getCode(){
         return code;
     }
 
