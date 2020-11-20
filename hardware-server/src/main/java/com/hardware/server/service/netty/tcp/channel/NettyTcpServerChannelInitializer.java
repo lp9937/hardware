@@ -54,7 +54,7 @@ public class NettyTcpServerChannelInitializer extends
                         tcp.getWriterIdleTimeSeconds(),
                         tcp.getAllIdleTimeSeconds()));
         //todo 消息处理handler
-        
+        pipeline.addLast();
     }
 
     private LengthFieldBasedFrameDecoder getLengthFieldBasedFrameDecoder(){

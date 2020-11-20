@@ -2,12 +2,12 @@ package com.hardware.server.service.charging.message.body.response;
 
 import com.hardware.common.annotation.MessageRegister;
 import com.hardware.common.enums.CommandEnum;
-import com.hardware.common.enums.HardwareEnum;
-import com.hardware.server.service.charging.message.ChargingPileMessageBody;
+import com.hardware.server.service.charging.constant.MessageFieldConst;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 @MessageRegister(command = CommandEnum.SIGN_RESPONSE_CMD)
-public class SignInResponseMessageBody extends ChargingPileMessageBody {
+public class SignInResponseMessageBody extends ChargingPileResponseMessageBody {
     /**
      * 预留字段
      * 占2字节
@@ -36,12 +36,11 @@ public class SignInResponseMessageBody extends ChargingPileMessageBody {
     }
 
     @Override
-    public Object decoder(ByteBuf byteBuf) {
-        return null;
-    }
-
-    @Override
-    public HardwareEnum getHardwareType() {
-        return null;
+    public SignInResponseMessageBody encoder() {
+        ByteBuf bodyByteBuf
+                =Unpooled.buffer(MessageFieldConst.SIGN_IN_RESPONSE_MESSAGE_BODY_LENGTH);
+        bodyByteBuf.writeByte(reserve1);
+        bodyByteBuf.writeByte(reserve2);
+        return this;
     }
 }

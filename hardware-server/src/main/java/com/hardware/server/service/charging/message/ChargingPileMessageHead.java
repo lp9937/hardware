@@ -1,9 +1,9 @@
 package com.hardware.server.service.charging.message;
 
-import com.hardware.common.enums.HardwareEnum;
 import com.hardware.server.service.charging.constant.MessageFieldConst;
 import com.hardware.server.service.netty.message.NettyMessageHead;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 /**
  * Created by lp on 2020/11/17
@@ -23,18 +23,20 @@ public class ChargingPileMessageHead extends NettyMessageHead {
      */
     private int length;
     /**
-     * 版本字段
+     * 版本字段,无符号byte
+     * 占1个字节
      */
-    private byte version;
+    private short version;
     /**
-     * 序号字段
+     * 序号字段,无符号byte
+     * 占1个字节，取值0~0xFF
      */
-    private byte sequenceNumber;
+    private short sequenceNumber;
     /**
-     * 命令类型字段
+     * 命令类型字段,无符号short
      * 占2字节
      */
-    private short commandType;
+    private int commandType;
 
     public ChargingPileMessageHead(){
         startField= MessageFieldConst.START_FIELD_VALUE;
@@ -53,42 +55,56 @@ public class ChargingPileMessageHead extends NettyMessageHead {
         return length;
     }
 
-    public void setLength(int length) {
+    public ChargingPileMessageHead setLength(int length) {
         this.length = length;
+        return this;
     }
 
-    public byte getVersion() {
+    public short getVersion() {
         return version;
     }
 
-    public void setVersion(byte version) {
+    public ChargingPileMessageHead setVersion(short version) {
         this.version = version;
+        return this;
     }
 
-    public byte getSequenceNumber() {
+    public short getSequenceNumber() {
         return sequenceNumber;
     }
 
-    public void setSequenceNumber(byte sequenceNumber) {
+    public ChargingPileMessageHead setSequenceNumber(short sequenceNumber) {
         this.sequenceNumber = sequenceNumber;
+        return this;
     }
 
-    public short getCommandType() {
+    public int getCommandType() {
         return commandType;
     }
 
-    public void setCommandType(short commandType) {
+    public ChargingPileMessageHead setCommandType(int commandType) {
         this.commandType = commandType;
-    }
-
-    @Override
-    public ChargingPileMessageHead decoder(ByteBuf byteBuf) {
-
         return this;
     }
 
     @Override
-    public HardwareEnum getHardwareType() {
-        return HardwareEnum.CHARGING_PILE;
+    public ChargingPileMessageHead decoder() {
+        ByteBuf head = getHead();
+        setLength(head.readUnsignedShort())
+                .setVersion(head.readUnsignedByte())
+                .setSequenceNumber(head.readUnsignedByte())
+                .setCommandType(head.readUnsignedShort());
+        return this;
+    }
+
+    @Override
+    public ChargingPileMessageHead encoder() {
+        ByteBuf headByteBuf= Unpooled.buffer(MessageFieldConst.HEAD_LENGTH
+                -MessageFieldConst.LENGTH_FIELD_LENGTH-MessageFieldConst.START_FIELD_LENGTH);
+        headByteBuf.writeByte(version);
+        headByteBuf.writeByte(sequenceNumber);
+        headByteBuf.writeShort(commandType);
+        setHead(headByteBuf);
+        return this;
     }
 }

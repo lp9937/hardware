@@ -7,4 +7,5 @@ import com.hardware.server.service.netty.message.NettyMessageBody;
  * 充电桩消息体
  */
 public abstract class ChargingPileMessageBody extends NettyMessageBody {
+
 }

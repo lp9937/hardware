@@ -1,13 +1,12 @@
 package com.hardware.server.service.charging.coder;
 
-import com.hardware.common.enums.CommandEnum;
 import com.hardware.common.enums.ExceptionEnum;
 import com.hardware.common.enums.HardwareEnum;
 import com.hardware.common.exception.PacketException;
 import com.hardware.server.service.charging.constant.MessageFieldConst;
 import com.hardware.server.service.charging.message.ChargingPileMessage;
-import com.hardware.server.service.charging.message.ChargingPileMessageBody;
 import com.hardware.server.service.charging.message.ChargingPileMessageHead;
+import com.hardware.server.service.charging.message.body.request.ChargingPileRequestMessageBody;
 import com.hardware.server.service.netty.coder.INettyTcpMessageDecoder;
 import com.hardware.server.service.netty.register.MessageRegistryService;
 import io.netty.buffer.ByteBuf;
@@ -33,27 +32,26 @@ public class ChargingPileMessageDecoder implements
             throw new PacketException(ExceptionEnum.UNRECOGNIZED_PACKAGE);
         }
         //消息头数据处理
-        ByteBuf headBuf= Unpooled.buffer(MessageFieldConst.MESSAGE_HEAD_LENGTH);
+        ByteBuf headBuf= Unpooled.buffer(MessageFieldConst.HEAD_LENGTH);
         byteBuf.readBytes(headBuf);
 
         ChargingPileMessageHead messageHead=new ChargingPileMessageHead();
-        messageHead.setHead(headBuf).decoder(headBuf);
+        messageHead.setHead(headBuf).decoder();
 
         //消息体数据处理
         int bodyLength=messageHead.getLength()
-                -MessageFieldConst.MESSAGE_HEAD_LENGTH
+                -MessageFieldConst.HEAD_LENGTH
                 -MessageFieldConst.CHECK_FIELD_LENGTH;
         ByteBuf bodyBuf=Unpooled.buffer(bodyLength);
         byteBuf.readBytes(bodyBuf);
-        ChargingPileMessageBody messageBody=
-                (ChargingPileMessageBody)messageRegistryService
+        ChargingPileRequestMessageBody messageBody=
+                (ChargingPileRequestMessageBody)messageRegistryService
                         .getMessage(Long.valueOf(messageHead.getCommandType()));
-        messageBody.setBody(bodyBuf).decoder(byteBuf);
+        ((ChargingPileRequestMessageBody)messageBody.setBody(bodyBuf)).decoder();
 
         ChargingPileMessage chargingPileMessage=new ChargingPileMessage();
         chargingPileMessage.setMessageHead(messageHead)
                 .setMessageBody(messageBody);
-
         return chargingPileMessage;
     }
 }

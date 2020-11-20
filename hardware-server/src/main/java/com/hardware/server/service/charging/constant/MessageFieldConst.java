@@ -21,12 +21,11 @@ public final class MessageFieldConst {
      * 消息头长度
      * 2字节起始字段+2字节长度字段+1字节版本字段+1字节序列号字段+2命令字段
      */
-    public static final int MESSAGE_HEAD_LENGTH=8;
+    public static final int HEAD_LENGTH =8;
     /**
      * 校验字段占用字节数
      */
     public static final int CHECK_FIELD_LENGTH=1;
-
     /**
      * 充电桩编码字段占用字节数
      */
@@ -37,8 +36,14 @@ public final class MessageFieldConst {
     public static final int DATETIME_FIELD_LENGTH=8;
     /**
      * 心跳响应消息体占用字节数
+     * 预留字段1(占2字节)+预留字段2(占2字节)+心跳应答(占2字节)
      */
     public static final int HEARTBEAT_RESPONSE_MESSAGE_BODY_LENGTH=6;
+    /**
+     * 签到响应消息体占用字节数
+     * 预留字段1(占2字节)+预留字段2(占2字节)
+     */
+    public static final int SIGN_IN_RESPONSE_MESSAGE_BODY_LENGTH=4;
 
     private MessageFieldConst(){
 

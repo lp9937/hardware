@@ -1,9 +1,8 @@
 package com.hardware.server.service.netty.message;
 
-import com.hardware.server.service.netty.coder.INettyTcpMessageDecoder;
 import io.netty.buffer.ByteBuf;
 
-public abstract class NettyMessageHead implements INettyTcpMessageDecoder {
+public abstract class NettyMessageHead{
     private ByteBuf head;
 
     public ByteBuf getHead() {
@@ -14,4 +13,8 @@ public abstract class NettyMessageHead implements INettyTcpMessageDecoder {
         this.head = head;
         return this;
     }
+
+    public abstract NettyMessageHead decoder();
+
+    public abstract NettyMessageHead encoder();
 }
