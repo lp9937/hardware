@@ -2,6 +2,8 @@ package com.hardware.server.service.netty.coder;
 
 import com.hardware.server.service.IHardwareType;
 
+import java.nio.ByteOrder;
+
 public abstract class FrameDecoderParam implements IHardwareType {
     /**
      * 获取帧最大长度字节
@@ -32,4 +34,10 @@ public abstract class FrameDecoderParam implements IHardwareType {
      * @return
      */
     public abstract int getInitialBytesToStrip();
+
+    /**
+     * 获取大小端序
+     * @return
+     */
+    public abstract ByteOrder getByteOrder();
 }

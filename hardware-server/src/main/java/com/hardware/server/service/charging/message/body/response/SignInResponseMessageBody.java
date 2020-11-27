@@ -5,33 +5,35 @@ import com.hardware.common.enums.CommandEnum;
 import com.hardware.server.service.charging.constant.MessageFieldConst;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import org.springframework.stereotype.Component;
 
-@MessageRegister(command = CommandEnum.SIGN_RESPONSE_CMD)
+@Component
+@MessageRegister
 public class SignInResponseMessageBody extends ChargingPileResponseMessageBody {
     /**
      * 预留字段
      * 占2字节
      */
-    private short reserve1;
+    private int reserve1;
     /**
      * 预留字段
      * 占2字节
      */
-    private short reserve2;
+    private int reserve2;
 
-    public short getReserve1() {
+    public int getReserve1() {
         return reserve1;
     }
 
-    public void setReserve1(short reserve1) {
+    public void setReserve1(int reserve1) {
         this.reserve1 = reserve1;
     }
 
-    public short getReserve2() {
+    public int getReserve2() {
         return reserve2;
     }
 
-    public void setReserve2(short reserve2) {
+    public void setReserve2(int reserve2) {
         this.reserve2 = reserve2;
     }
 
@@ -39,8 +41,19 @@ public class SignInResponseMessageBody extends ChargingPileResponseMessageBody {
     public SignInResponseMessageBody encoder() {
         ByteBuf bodyByteBuf
                 =Unpooled.buffer(MessageFieldConst.SIGN_IN_RESPONSE_MESSAGE_BODY_LENGTH);
-        bodyByteBuf.writeByte(reserve1);
-        bodyByteBuf.writeByte(reserve2);
+        bodyByteBuf.writeShortLE(reserve1);
+        bodyByteBuf.writeShortLE(reserve2);
+        setBody(bodyByteBuf);
         return this;
+    }
+
+    @Override
+    public int getLength() {
+        return MessageFieldConst.SIGN_IN_RESPONSE_MESSAGE_BODY_LENGTH;
+    }
+
+    @Override
+    public CommandEnum getCommand() {
+        return CommandEnum.SIGN_RESPONSE_CMD;
     }
 }

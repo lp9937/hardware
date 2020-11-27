@@ -14,6 +14,8 @@ public abstract class NettyMessageHead{
         return this;
     }
 
+    public abstract NettyMessageHead setLength(int length);
+
     public abstract NettyMessageHead decoder();
 
     public abstract NettyMessageHead encoder();

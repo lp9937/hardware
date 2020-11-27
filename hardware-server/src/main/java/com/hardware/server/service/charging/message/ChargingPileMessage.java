@@ -1,5 +1,6 @@
 package com.hardware.server.service.charging.message;
 
+import com.hardware.common.enums.CommandEnum;
 import com.hardware.common.enums.HardwareEnum;
 import com.hardware.server.service.netty.message.AbstractNettyMessage;
 
@@ -16,14 +17,20 @@ public class ChargingPileMessage<B extends ChargingPileMessageBody> extends
 
     /**
      * 充电桩校验位
+     * 占1字节
      */
-    private byte check;
+    private short check;
 
-    public byte getCheck() {
+    public short getCheck() {
         return check;
     }
 
-    public void setCheck(byte check) {
+    public void setCheck(short check) {
         this.check = check;
+    }
+
+    @Override
+    public CommandEnum getCommand() {
+        return CommandEnum.getInstance(getMessageHead().getCommandType());
     }
 }

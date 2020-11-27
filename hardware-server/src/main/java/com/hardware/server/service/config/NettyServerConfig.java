@@ -7,10 +7,7 @@ import com.hardware.server.service.netty.coder.FrameEncoderParam;
 import com.hardware.server.service.netty.coder.LengthFieldBasedFrameEncoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelPipeline;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
@@ -27,14 +24,12 @@ public class NettyServerConfig {
 
     @Bean
     @Scope("prototype")
-    //@Lazy(value = true)
     public NioEventLoopGroup getEventLoopGroup(int nThreads, ThreadFactory threadFactory){
         return new NioEventLoopGroup(nThreads,threadFactory);
     }
 
     @Bean
     @Scope("prototype")
-    //@Lazy(value = true)
     public ThreadNameFactory getThreadFactory(String prefixName,boolean isDaemon){
         return new ThreadNameFactory(prefixName,isDaemon);
     }
@@ -55,9 +50,9 @@ public class NettyServerConfig {
     @Scope("prototype")
     public LengthFieldBasedFrameDecoder getLengthFieldBasedFrameDecoder(
             FrameDecoderParam param){
-        return new LengthFieldBasedFrameDecoder(param.getMaxFrameLength(),
+        return new LengthFieldBasedFrameDecoder(param.getByteOrder(),param.getMaxFrameLength(),
                 param.getLengthFieldOffset(),param.getLengthFieldLength(),
-                param.getLengthAdjustment(),param.getInitialBytesToStrip());
+                param.getLengthAdjustment(),param.getInitialBytesToStrip(),false);
     }
 
     @Bean

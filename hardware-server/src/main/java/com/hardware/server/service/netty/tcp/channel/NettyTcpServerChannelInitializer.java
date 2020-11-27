@@ -3,6 +3,7 @@ package com.hardware.server.service.netty.tcp.channel;
 import com.hardware.common.utils.SpringUtils;
 import com.hardware.server.service.netty.coder.*;
 import com.hardware.server.service.netty.handler.HardwareLoggingHandler;
+import com.hardware.server.service.netty.handler.HardwareTcpMessageHandler;
 import com.hardware.server.service.property.HardwareProperties;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -28,6 +29,8 @@ public class NettyTcpServerChannelInitializer extends
     private NettyTcpMessageDecoder nettyTcpMessageDecoder;
     @Autowired
     private NettyTcpMessageEncoder nettyTcpMessageEncoder;
+    @Autowired
+    private HardwareTcpMessageHandler hardwareTcpMessageHandler;
 
     private final HardwareProperties.Netty.Tcp tcp;
     public NettyTcpServerChannelInitializer(HardwareProperties.Netty.Tcp tcp){
@@ -38,23 +41,23 @@ public class NettyTcpServerChannelInitializer extends
     protected void initChannel(NioSocketChannel nioSocketChannel) throws Exception {
         //获取管道
         ChannelPipeline pipeline=nioSocketChannel.pipeline();
-        //解决粘包、拆包
-        pipeline.addLast("frameDecoder",getLengthFieldBasedFrameDecoder());
-        pipeline.addLast("frameEncoder",getLengthFieldBasedFrameEncoder());
-        //编解码
-        pipeline.addLast("decoder",nettyTcpMessageDecoder);
-        pipeline.addLast("encoder",nettyTcpMessageEncoder);
-
         if(!SpringUtils.isProd()){
             pipeline.addLast("logger", hardwareLoggingHandler);
         }
+        //解决粘包、拆包
+        pipeline.addLast("frameDecoder",getLengthFieldBasedFrameDecoder());
+        //pipeline.addLast("frameEncoder",getLengthFieldBasedFrameEncoder());
+        //编解码
+        pipeline.addLast("decoder",nettyTcpMessageDecoder);
+        pipeline.addLast("encoder",nettyTcpMessageEncoder);
 
         pipeline.addLast("idleStateHandler",
                 new IdleStateHandler(tcp.getReaderIdleTimeSeconds(),
                         tcp.getWriterIdleTimeSeconds(),
                         tcp.getAllIdleTimeSeconds()));
         //todo 消息处理handler
-        pipeline.addLast();
+        pipeline.addLast(HardwareTcpMessageHandler.class.getSimpleName(),
+                hardwareTcpMessageHandler);
     }
 
     private LengthFieldBasedFrameDecoder getLengthFieldBasedFrameDecoder(){

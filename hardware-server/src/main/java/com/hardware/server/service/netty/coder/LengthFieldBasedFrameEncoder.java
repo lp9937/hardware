@@ -15,6 +15,13 @@ public class LengthFieldBasedFrameEncoder extends MessageToMessageEncoder<ByteBu
     @Override
     protected void encode(ChannelHandlerContext channelHandlerContext,
                           ByteBuf byteBuf, List<Object> out) throws Exception {
+        int length=byteBuf.readableBytes();
         //todo 编码
+//        if(param.isLengthIncludesLengthFieldLength()){
+//            length=length+param.getLengthFieldLength();
+//        }
+//        if(param.isLengthIncludesStartFieldLength()){
+//            length=length+param.getStartFieldLength();
+//        }
     }
 }

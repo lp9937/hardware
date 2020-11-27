@@ -44,6 +44,14 @@ public final class MessageFieldConst {
      * 预留字段1(占2字节)+预留字段2(占2字节)
      */
     public static final int SIGN_IN_RESPONSE_MESSAGE_BODY_LENGTH=4;
+    /**
+     * 充电/预约卡号字段占用字节数
+     */
+    public static final int CARD_NUMBER_FIELD_LENGTH=32;
+    /**
+     * 状态响应消息消息体长度
+     */
+    public static final int STATE_RESPONSE_MESSAGE_BODY_LENGTH=45;
 
     private MessageFieldConst(){
 

@@ -10,7 +10,6 @@ import com.hardware.server.service.charging.message.body.request.ChargingPileReq
 import com.hardware.server.service.netty.coder.INettyTcpMessageDecoder;
 import com.hardware.server.service.netty.register.MessageRegistryService;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,9 +31,9 @@ public class ChargingPileMessageDecoder implements
             throw new PacketException(ExceptionEnum.UNRECOGNIZED_PACKAGE);
         }
         //消息头数据处理
-        ByteBuf headBuf= Unpooled.buffer(MessageFieldConst.HEAD_LENGTH);
-        byteBuf.readBytes(headBuf);
-
+        int headLength=MessageFieldConst.HEAD_LENGTH
+                -MessageFieldConst.START_FIELD_LENGTH;
+        ByteBuf headBuf= byteBuf.readBytes(headLength);
         ChargingPileMessageHead messageHead=new ChargingPileMessageHead();
         messageHead.setHead(headBuf).decoder();
 
@@ -42,16 +41,16 @@ public class ChargingPileMessageDecoder implements
         int bodyLength=messageHead.getLength()
                 -MessageFieldConst.HEAD_LENGTH
                 -MessageFieldConst.CHECK_FIELD_LENGTH;
-        ByteBuf bodyBuf=Unpooled.buffer(bodyLength);
-        byteBuf.readBytes(bodyBuf);
+        ByteBuf bodyBuf=byteBuf.readBytes(bodyLength);
         ChargingPileRequestMessageBody messageBody=
                 (ChargingPileRequestMessageBody)messageRegistryService
-                        .getMessage(Long.valueOf(messageHead.getCommandType()));
+                        .getMessageBody(messageHead.getCommandType());
         ((ChargingPileRequestMessageBody)messageBody.setBody(bodyBuf)).decoder();
 
         ChargingPileMessage chargingPileMessage=new ChargingPileMessage();
         chargingPileMessage.setMessageHead(messageHead)
                 .setMessageBody(messageBody);
+        chargingPileMessage.setCheck(byteBuf.readUnsignedByte());
         return chargingPileMessage;
     }
 }

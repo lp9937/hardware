@@ -1,6 +1,6 @@
 package com.hardware.common.enums;
 
-public enum CommandEnum implements IBaseEnum<Long> {
+public enum CommandEnum implements IBaseEnum<Integer> {
     HEARTBEAT_RESPONSE_CMD(HardwareEnum.CHARGING_PILE,(short)101,"心跳应答命令"),
     HEARTBEAT_CMD(HardwareEnum.CHARGING_PILE,(short)102,"心跳命令"),
     STATE_RESPONSE_CMD(HardwareEnum.CHARGING_PILE,(short)103,"状态应答命令"),
@@ -38,27 +38,53 @@ public enum CommandEnum implements IBaseEnum<Long> {
     ELECTRICITY_PRICING_STRATEGY_QUERY_RESPONSE_CMD(HardwareEnum.CHARGING_PILE,(short)1102,"24小时电费计价策略应答命令"),
     ELECTRICITY_PRICING_STRATEGY_SETTING_CMD(HardwareEnum.CHARGING_PILE,(short)1103,"24小时电费计价策略设置命令"),
     ELECTRICITY_PRICING_STRATEGY_SETTING_RESPONSE_CMD(HardwareEnum.CHARGING_PILE,(short)1104,"24小时电费计价策略设置应答命令"),
+
+
+
+
+
+
+
+    ALL(HardwareEnum.ALL,10000,"所有命令"),
     ;
 
-    CommandEnum(HardwareEnum type,long code, String desc){
+    CommandEnum(HardwareEnum type,int code, String desc){
         this.type=type;
         this.code=code;
         this.desc=desc;
     }
 
+    public static CommandEnum getInstance(int code){
+        for (CommandEnum item:values()) {
+            if(item.getCode().equals(code)){
+                return item;
+            }
+        }
+        return null;
+    }
+
     private HardwareEnum type;
-    private long code;
+    private int code;
     private String desc;
     public HardwareEnum getType(){
         return type;
     }
     @Override
-    public Long getCode() {
+    public Integer getCode() {
         return code;
     }
 
     @Override
     public String getDesc() {
         return desc;
+    }
+
+    @Override
+    public String toString() {
+        return "CommandEnum{" +
+                "type=" + type +
+                ", code=" + code +
+                ", desc='" + desc + '\'' +
+                '}';
     }
 }

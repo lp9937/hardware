@@ -6,8 +6,10 @@ import com.hardware.server.service.charging.constant.MessageFieldConst;
 import com.hardware.server.service.charging.message.ChargingPileMessageBody;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import org.springframework.stereotype.Component;
 
-@MessageRegister(command = CommandEnum.HEARTBEAT_RESPONSE_CMD)
+@Component
+@MessageRegister
 public class HeartbeatResponseMessageBody extends ChargingPileResponseMessageBody {
     /**
      * 预留字段
@@ -54,10 +56,21 @@ public class HeartbeatResponseMessageBody extends ChargingPileResponseMessageBod
     public HeartbeatResponseMessageBody encoder() {
         ByteBuf bodyByteBuf=
                 Unpooled.buffer(MessageFieldConst.HEARTBEAT_RESPONSE_MESSAGE_BODY_LENGTH);
-        bodyByteBuf.writeShort(reserve1);
-        bodyByteBuf.writeShort(reserve2);
-        bodyByteBuf.writeShort(ack);
+        bodyByteBuf.writeShortLE(reserve1);
+        bodyByteBuf.writeShortLE(reserve2);
+        bodyByteBuf.writeShortLE(ack);
         setBody(bodyByteBuf);
         return this;
     }
+
+    @Override
+    public int getLength() {
+        return MessageFieldConst.HEARTBEAT_RESPONSE_MESSAGE_BODY_LENGTH;
+    }
+
+    @Override
+    public CommandEnum getCommand() {
+        return CommandEnum.HEARTBEAT_RESPONSE_CMD;
+    }
+
 }

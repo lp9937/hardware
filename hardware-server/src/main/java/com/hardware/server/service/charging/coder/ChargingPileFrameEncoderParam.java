@@ -1,6 +1,7 @@
 package com.hardware.server.service.charging.coder;
 
 import com.hardware.common.enums.HardwareEnum;
+import com.hardware.server.service.charging.constant.MessageFieldConst;
 import com.hardware.server.service.netty.coder.FrameEncoderParam;
 import org.springframework.stereotype.Component;
 
@@ -14,31 +15,31 @@ public class ChargingPileFrameEncoderParam extends FrameEncoderParam {
 
     @Override
     public int getLengthFieldLength() {
-        return 0;
+        return MessageFieldConst.LENGTH_FIELD_LENGTH;
     }
 
     @Override
     public boolean isLengthIncludesLengthFieldLength() {
-        return false;
+        return true;
     }
 
     @Override
     public int getLengthAdjustment() {
-        return 0;
+        return MessageFieldConst.LENGTH_FIELD_LENGTH+MessageFieldConst.START_FIELD_LENGTH;
     }
 
     @Override
     public int getStartFieldValue() {
-        return 0;
+        return MessageFieldConst.START_FIELD_VALUE;
     }
 
     @Override
     public int getStartFieldLength() {
-        return 0;
+        return MessageFieldConst.START_FIELD_LENGTH;
     }
 
     @Override
     public boolean isLengthIncludesStartFieldLength() {
-        return false;
+        return true;
     }
 }

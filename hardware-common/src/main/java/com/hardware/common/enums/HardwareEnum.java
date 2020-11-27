@@ -1,8 +1,11 @@
 package com.hardware.common.enums;
 
 public enum HardwareEnum implements IBaseEnum<Integer> {
-    CHARGING_PILE(0,"充电桩")
+    CHARGING_PILE(0,"充电桩"),
 
+
+
+    ALL(99,"所有设备")
     ;
 
     HardwareEnum(int code, String desc){
@@ -21,6 +24,7 @@ public enum HardwareEnum implements IBaseEnum<Integer> {
 
     private int code;
     private String desc;
+
     public Integer getCode(){
         return code;
     }

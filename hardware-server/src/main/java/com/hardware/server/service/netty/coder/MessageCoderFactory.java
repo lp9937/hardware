@@ -2,13 +2,16 @@ package com.hardware.server.service.netty.coder;
 
 import com.hardware.server.service.netty.message.AbstractNettyMessage;
 import io.netty.buffer.ByteBuf;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.function.Predicate;
 
 @Component
+@Slf4j
 public class MessageCoderFactory {
     @Autowired
     private List<INettyTcpMessageDecoder> decoders;

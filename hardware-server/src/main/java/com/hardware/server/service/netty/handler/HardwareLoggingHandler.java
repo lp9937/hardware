@@ -17,21 +17,21 @@ public class HardwareLoggingHandler extends LoggingHandler {
         super(LogLevel.DEBUG);
     }
 
-    private final ChannelFutureListener exceptionListener= channelFuture -> {
-        if(!channelFuture.isSuccess()){
-            Throwable throwable= channelFuture.cause();
-            if(throwable!=null){
-                log.error(throwable.toString(),throwable);
-            }
-        }
-    };
-
-    @Override
-    public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
-        if(logger.isEnabled(this.internalLevel)){
-            logger.log(internalLevel,this.format(ctx,"WRITE",msg));
-        }
-        ChannelPromise channelPromise=promise.unvoid();
-        channelPromise.addListener(exceptionListener);
-    }
+//    private final ChannelFutureListener exceptionListener= channelFuture -> {
+//        if(!channelFuture.isSuccess()){
+//            Throwable throwable= channelFuture.cause();
+//            if(throwable!=null){
+//                log.error(throwable.toString(),throwable);
+//            }
+//        }
+//    };
+//
+//    @Override
+//    public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
+//        if(logger.isEnabled(this.internalLevel)){
+//            logger.log(internalLevel,this.format(ctx,"WRITE",msg));
+//        }
+//        ChannelPromise channelPromise=promise.unvoid();
+//        channelPromise.addListener(exceptionListener);
+//    }
 }

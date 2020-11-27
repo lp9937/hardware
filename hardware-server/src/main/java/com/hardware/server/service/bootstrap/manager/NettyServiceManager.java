@@ -3,7 +3,6 @@ package com.hardware.server.service.bootstrap.manager;
 import com.hardware.common.factory.ThreadNameFactory;
 import com.hardware.common.utils.SpringUtils;
 import com.hardware.server.service.netty.AbstractNettyServerService;
-import com.hardware.server.service.netty.register.MessageRegistryService;
 import com.hardware.server.service.netty.tcp.NettyTcpServerService;
 import com.hardware.server.service.netty.tcp.channel.NettyTcpServerChannelInitializer;
 import com.hardware.server.service.property.HardwareProperties;
@@ -26,8 +25,6 @@ public class NettyServiceManager {
     private HardwareProperties hardwareProperties;
     @Autowired
     private BeanFactory beanFactory;
-    @Autowired
-    private MessageRegistryService messageRegistryService;
     private final Map<String, AbstractNettyServerService> nettyServerServiceMap=new HashMap<>();
 
     @PostConstruct
@@ -52,6 +49,7 @@ public class NettyServiceManager {
                         .getBean(NioEventLoopGroup.class, item.getBossThreadNum(),bossThreadFactory));
                 nettyTcpServerService.setWorkerGroup(beanFactory
                         .getBean(NioEventLoopGroup.class, item.getWorkerThreadNum(),workerThreadFactory));
+                nettyTcpServerService.setHardwareType(item.getOptions().getHardwareType());
                 nettyTcpServerService.setChannelInitializer(
                         SpringUtils.get(NettyTcpServerChannelInitializer.class,item));
                 nettyTcpServerService.register();

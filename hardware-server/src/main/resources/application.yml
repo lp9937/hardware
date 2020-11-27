@@ -6,9 +6,9 @@ hardware:
         worker-thread-num: 4
         options:
           address: 10.10.20.87
-          port: 6111
+          port: 6110
           serviceId: charging-pile
           hardware-type: 0
 logging:
   level:
-    root: info
+    root: debug

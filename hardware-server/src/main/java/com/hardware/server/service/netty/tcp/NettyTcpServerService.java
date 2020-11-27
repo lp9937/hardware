@@ -1,5 +1,6 @@
 package com.hardware.server.service.netty.tcp;
 
+import com.hardware.common.constant.HardwareConstant;
 import com.hardware.server.service.netty.AbstractNettyServerService;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
@@ -21,6 +22,7 @@ public class NettyTcpServerService extends AbstractNettyServerService {
     private EventLoopGroup workerGroup;
     private ChannelInitializer channelInitializer;
     private ChannelFuture channelFuture;
+    private int hardwareType;
 
     public NettyTcpServerService setBossGroup(EventLoopGroup bossGroup) {
         this.bossGroup = bossGroup;
@@ -34,6 +36,11 @@ public class NettyTcpServerService extends AbstractNettyServerService {
 
     public NettyTcpServerService setChannelInitializer(ChannelInitializer channelInitializer) {
         this.channelInitializer = channelInitializer;
+        return this;
+    }
+
+    public NettyTcpServerService setHardwareType(int hardwareType){
+        this.hardwareType=hardwareType;
         return this;
     }
 
@@ -60,7 +67,9 @@ public class NettyTcpServerService extends AbstractNettyServerService {
         //接收缓存
         serverBootstrap.childOption(ChannelOption.SO_RCVBUF,1024*256);
         serverBootstrap.childOption(ChannelOption.SO_SNDBUF,1024*256);
-        serverBootstrap.handler(new LoggingHandler(LogLevel.ERROR));
+        serverBootstrap.handler(new LoggingHandler(LogLevel.DEBUG));
+
+        serverBootstrap.childAttr(HardwareConstant.HARDWARE_TYPE,hardwareType);
         //设置通道工厂
         serverBootstrap.childHandler(channelInitializer);
         //绑定地址

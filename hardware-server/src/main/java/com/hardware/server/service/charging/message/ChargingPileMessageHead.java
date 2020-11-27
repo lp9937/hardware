@@ -54,7 +54,7 @@ public class ChargingPileMessageHead extends NettyMessageHead {
     public int getLength() {
         return length;
     }
-
+    @Override
     public ChargingPileMessageHead setLength(int length) {
         this.length = length;
         return this;
@@ -90,20 +90,21 @@ public class ChargingPileMessageHead extends NettyMessageHead {
     @Override
     public ChargingPileMessageHead decoder() {
         ByteBuf head = getHead();
-        setLength(head.readUnsignedShort())
+        setLength(head.readUnsignedShortLE())
                 .setVersion(head.readUnsignedByte())
                 .setSequenceNumber(head.readUnsignedByte())
-                .setCommandType(head.readUnsignedShort());
+                .setCommandType(head.readUnsignedShortLE());
         return this;
     }
 
     @Override
     public ChargingPileMessageHead encoder() {
-        ByteBuf headByteBuf= Unpooled.buffer(MessageFieldConst.HEAD_LENGTH
-                -MessageFieldConst.LENGTH_FIELD_LENGTH-MessageFieldConst.START_FIELD_LENGTH);
+        ByteBuf headByteBuf= Unpooled.buffer(MessageFieldConst.HEAD_LENGTH);
+        headByteBuf.writeShort(startField);
+        headByteBuf.writeShortLE(length);
         headByteBuf.writeByte(version);
         headByteBuf.writeByte(sequenceNumber);
-        headByteBuf.writeShort(commandType);
+        headByteBuf.writeShortLE(commandType);
         setHead(headByteBuf);
         return this;
     }

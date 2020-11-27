@@ -4,8 +4,10 @@ import com.hardware.common.annotation.MessageRegister;
 import com.hardware.common.enums.CommandEnum;
 import com.hardware.server.service.charging.constant.MessageFieldConst;
 import io.netty.buffer.ByteBuf;
+import org.springframework.stereotype.Component;
 
-@MessageRegister(command = CommandEnum.SIGN_CMD)
+@Component
+@MessageRegister
 public class SignInRequestMessageBody extends ChargingPileRequestMessageBody {
     private final static int RESERVE_5_6_7_FIELD_LENGTH =8;
     /**
@@ -265,24 +267,29 @@ public class SignInRequestMessageBody extends ChargingPileRequestMessageBody {
     @Override
     public SignInRequestMessageBody decoder() {
         ByteBuf body=getBody();
-        setReserve1(body.readShort());
-        setReserve2(body.readShort());
+        setReserve1(body.readShortLE());
+        setReserve2(body.readShortLE());
         setCode(body);
         setReserve3(body.readByte());
-        setSoftVersion(body.readUnsignedInt());
-        setReserve4(body.readShort());
-        setStartupTime(body.readUnsignedInt());
+        setSoftVersion(body.readUnsignedIntLE());
+        setReserve4(body.readShortLE());
+        setStartupTime(body.readUnsignedIntLE());
         setUploadMode(body.readByte());
-        setSignIntervalTime(body.readShort());
+        setSignIntervalTime(body.readShortLE());
         setWorkingMode(body.readByte());
         setChargingGunNum(body.readByte());
         setHeartbeatPeriod(body.readByte());
         setHeartbeatTimeoutTimes(body.readByte());
-        setChargingRecordsNum(body.readUnsignedInt());
+        setChargingRecordsNum(body.readUnsignedIntLE());
         setDateTime(body);
         setReserve5(body);
         setReserve6(body);
         setReserve7(body);
         return this;
+    }
+
+    @Override
+    public CommandEnum getCommand() {
+        return CommandEnum.SIGN_CMD;
     }
 }
