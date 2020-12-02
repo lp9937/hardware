@@ -3,7 +3,7 @@ package com.hardware.server.service.charging.coder;
 import com.hardware.common.enums.HardwareEnum;
 import com.hardware.server.service.charging.constant.MessageFieldConst;
 import com.hardware.server.service.charging.message.ChargingPileMessage;
-import com.hardware.server.service.charging.message.body.response.ChargingPileResponseMessageBody;
+import com.hardware.server.service.charging.message.body.server.ChargingPileServerMessageBody;
 import com.hardware.server.service.netty.coder.INettyTcpMessageEncoder;
 import com.hardware.server.service.netty.message.NettyMessageHead;
 import io.netty.buffer.ByteBuf;
@@ -19,8 +19,8 @@ public class ChargingPileMessageEncoder implements
     }
     @Override
     public ByteBuf encoder(ChargingPileMessage chargingPileMessage) {
-        ChargingPileResponseMessageBody body=
-                ((ChargingPileResponseMessageBody)chargingPileMessage
+        ChargingPileServerMessageBody body=
+                ((ChargingPileServerMessageBody)chargingPileMessage
                         .getMessageBody()).encoder();
 
         NettyMessageHead head=chargingPileMessage.getMessageHead();

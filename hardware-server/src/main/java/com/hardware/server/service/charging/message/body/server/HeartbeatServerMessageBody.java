@@ -1,16 +1,15 @@
-package com.hardware.server.service.charging.message.body.response;
+package com.hardware.server.service.charging.message.body.server;
 
 import com.hardware.common.annotation.MessageRegister;
 import com.hardware.common.enums.CommandEnum;
 import com.hardware.server.service.charging.constant.MessageFieldConst;
-import com.hardware.server.service.charging.message.ChargingPileMessageBody;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import org.springframework.stereotype.Component;
 
-@Component
-@MessageRegister
-public class HeartbeatResponseMessageBody extends ChargingPileResponseMessageBody {
+//@Component
+//@MessageRegister
+public class HeartbeatServerMessageBody extends ChargingPileServerMessageBody {
     /**
      * 预留字段
      */
@@ -29,7 +28,7 @@ public class HeartbeatResponseMessageBody extends ChargingPileResponseMessageBod
         return reserve1;
     }
 
-    public HeartbeatResponseMessageBody setReserve1(short reserve1) {
+    public HeartbeatServerMessageBody setReserve1(short reserve1) {
         this.reserve1 = reserve1;
         return this;
     }
@@ -38,7 +37,7 @@ public class HeartbeatResponseMessageBody extends ChargingPileResponseMessageBod
         return reserve2;
     }
 
-    public HeartbeatResponseMessageBody setReserve2(short reserve2) {
+    public HeartbeatServerMessageBody setReserve2(short reserve2) {
         this.reserve2 = reserve2;
         return this;
     }
@@ -47,19 +46,19 @@ public class HeartbeatResponseMessageBody extends ChargingPileResponseMessageBod
         return ack;
     }
 
-    public HeartbeatResponseMessageBody setAck(int ack) {
+    public HeartbeatServerMessageBody setAck(int ack) {
         this.ack = ack;
         return this;
     }
 
     @Override
-    public HeartbeatResponseMessageBody encoder() {
-        ByteBuf bodyByteBuf=
-                Unpooled.buffer(MessageFieldConst.HEARTBEAT_RESPONSE_MESSAGE_BODY_LENGTH);
+    public HeartbeatServerMessageBody encoder(ByteBuf bodyByteBuf) {
+//        ByteBuf bodyByteBuf=
+//                Unpooled.buffer(MessageFieldConst.HEARTBEAT_RESPONSE_MESSAGE_BODY_LENGTH);
         bodyByteBuf.writeShortLE(reserve1);
         bodyByteBuf.writeShortLE(reserve2);
         bodyByteBuf.writeShortLE(ack);
-        setBody(bodyByteBuf);
+        //setBody(bodyByteBuf);
         return this;
     }
 
@@ -70,7 +69,7 @@ public class HeartbeatResponseMessageBody extends ChargingPileResponseMessageBod
 
     @Override
     public CommandEnum getCommand() {
-        return CommandEnum.HEARTBEAT_RESPONSE_CMD;
+        return CommandEnum.HEARTBEAT_SERVER_CMD;
     }
 
 }

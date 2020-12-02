@@ -1,4 +1,4 @@
-package com.hardware.server.service.charging.message.body.request;
+package com.hardware.server.service.charging.message.body.client;
 
 import com.hardware.common.annotation.MessageRegister;
 import com.hardware.common.enums.CommandEnum;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @MessageRegister
-public class HeartbeatRequestMessageBody extends ChargingPileRequestMessageBody {
+public class HeartbeatClientMessageBody extends ChargingPileClientMessageBody {
     /**
      * 预留字段
      * 占2字节
@@ -28,7 +28,7 @@ public class HeartbeatRequestMessageBody extends ChargingPileRequestMessageBody 
         return reserve1;
     }
 
-    public HeartbeatRequestMessageBody setReserve1(int reserve1) {
+    public HeartbeatClientMessageBody setReserve1(int reserve1) {
         this.reserve1 = reserve1;
         return this;
     }
@@ -37,7 +37,7 @@ public class HeartbeatRequestMessageBody extends ChargingPileRequestMessageBody 
         return reserve2;
     }
 
-    public HeartbeatRequestMessageBody setReserve2(int reserve2) {
+    public HeartbeatClientMessageBody setReserve2(int reserve2) {
         this.reserve2 = reserve2;
         return this;
     }
@@ -46,13 +46,13 @@ public class HeartbeatRequestMessageBody extends ChargingPileRequestMessageBody 
         return SerialNumber;
     }
 
-    public HeartbeatRequestMessageBody setSerialNumber(int serialNumber) {
+    public HeartbeatClientMessageBody setSerialNumber(int serialNumber) {
         SerialNumber = serialNumber;
         return this;
     }
 
     @Override
-    public HeartbeatRequestMessageBody decoder() {
+    public HeartbeatClientMessageBody decoder() {
         ByteBuf body=getBody();
         setReserve1(body.readUnsignedShortLE());
         setReserve2(body.readUnsignedShortLE());

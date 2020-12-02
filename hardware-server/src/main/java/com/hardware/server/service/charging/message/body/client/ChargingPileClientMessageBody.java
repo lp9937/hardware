@@ -1,11 +1,11 @@
-package com.hardware.server.service.charging.message.body.request;
+package com.hardware.server.service.charging.message.body.client;
 
 import com.hardware.server.service.charging.constant.MessageFieldConst;
 import com.hardware.server.service.charging.message.ChargingPileMessageBody;
 import com.hardware.server.service.netty.message.NettyMessageBody;
 import io.netty.buffer.ByteBuf;
 
-public abstract class ChargingPileRequestMessageBody extends ChargingPileMessageBody {
+public abstract class ChargingPileClientMessageBody extends ChargingPileMessageBody {
     /**
      * 充电桩编码,ASSIC编码
      * 占32字节
@@ -16,12 +16,12 @@ public abstract class ChargingPileRequestMessageBody extends ChargingPileMessage
         return code;
     }
 
-    public ChargingPileRequestMessageBody setCode(byte[] code) {
+    public ChargingPileClientMessageBody setCode(byte[] code) {
         this.code = code;
         return this;
     }
 
-    public ChargingPileRequestMessageBody setCode(ByteBuf byteBuf){
+    public ChargingPileClientMessageBody setCode(ByteBuf byteBuf){
         if(code==null){
             code=new byte[MessageFieldConst.CODE_FIELD_LENGTH];
         }

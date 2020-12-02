@@ -6,7 +6,7 @@ import com.hardware.common.exception.PacketException;
 import com.hardware.server.service.charging.constant.MessageFieldConst;
 import com.hardware.server.service.charging.message.ChargingPileMessage;
 import com.hardware.server.service.charging.message.ChargingPileMessageHead;
-import com.hardware.server.service.charging.message.body.request.ChargingPileRequestMessageBody;
+import com.hardware.server.service.charging.message.body.client.ChargingPileClientMessageBody;
 import com.hardware.server.service.netty.coder.INettyTcpMessageDecoder;
 import com.hardware.server.service.netty.register.MessageRegistryService;
 import io.netty.buffer.ByteBuf;
@@ -42,10 +42,10 @@ public class ChargingPileMessageDecoder implements
                 -MessageFieldConst.HEAD_LENGTH
                 -MessageFieldConst.CHECK_FIELD_LENGTH;
         ByteBuf bodyBuf=byteBuf.readBytes(bodyLength);
-        ChargingPileRequestMessageBody messageBody=
-                (ChargingPileRequestMessageBody)messageRegistryService
+        ChargingPileClientMessageBody messageBody=
+                (ChargingPileClientMessageBody)messageRegistryService
                         .getMessageBody(messageHead.getCommandType());
-        ((ChargingPileRequestMessageBody)messageBody.setBody(bodyBuf)).decoder();
+        ((ChargingPileClientMessageBody)messageBody.setBody(bodyBuf)).decoder();
 
         ChargingPileMessage chargingPileMessage=new ChargingPileMessage();
         chargingPileMessage.setMessageHead(messageHead)

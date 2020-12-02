@@ -3,14 +3,14 @@ package com.hardware.server.service.charging.handler;
 import com.hardware.common.constant.HardwareConstant;
 import com.hardware.server.service.charging.message.ChargingPileMessage;
 import com.hardware.server.service.charging.message.ChargingPileMessageHead;
-import com.hardware.server.service.charging.message.body.request.ChargingPileRequestMessageBody;
-import com.hardware.server.service.charging.message.body.response.ChargingPileResponseMessageBody;
+import com.hardware.server.service.charging.message.body.client.ChargingPileClientMessageBody;
+import com.hardware.server.service.charging.message.body.server.ChargingPileServerMessageBody;
 import com.hardware.server.service.netty.handler.AbstractMessageHandler;
 import com.hardware.server.service.netty.message.AbstractNettyMessage;
 import com.hardware.server.service.netty.session.ISession;
 
-public abstract class AbstractChargingPileMessageHandler<Q extends ChargingPileRequestMessageBody,
-        P extends ChargingPileResponseMessageBody> extends AbstractMessageHandler {
+public abstract class AbstractChargingPileMessageHandler<Q extends ChargingPileClientMessageBody,
+        P extends ChargingPileServerMessageBody> extends AbstractMessageHandler {
 
     public byte computeCheck(ChargingPileMessage<P> response) {
         return 0;

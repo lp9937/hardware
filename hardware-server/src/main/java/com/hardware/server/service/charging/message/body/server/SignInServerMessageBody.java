@@ -1,4 +1,4 @@
-package com.hardware.server.service.charging.message.body.response;
+package com.hardware.server.service.charging.message.body.server;
 
 import com.hardware.common.annotation.MessageRegister;
 import com.hardware.common.enums.CommandEnum;
@@ -7,9 +7,9 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import org.springframework.stereotype.Component;
 
-@Component
-@MessageRegister
-public class SignInResponseMessageBody extends ChargingPileResponseMessageBody {
+//@Component
+//@MessageRegister
+public class SignInServerMessageBody extends ChargingPileServerMessageBody {
     /**
      * 预留字段
      * 占2字节
@@ -38,12 +38,12 @@ public class SignInResponseMessageBody extends ChargingPileResponseMessageBody {
     }
 
     @Override
-    public SignInResponseMessageBody encoder() {
-        ByteBuf bodyByteBuf
-                =Unpooled.buffer(MessageFieldConst.SIGN_IN_RESPONSE_MESSAGE_BODY_LENGTH);
+    public SignInServerMessageBody encoder(ByteBuf bodyByteBuf) {
+//        ByteBuf bodyByteBuf
+//                =Unpooled.buffer(MessageFieldConst.SIGN_IN_RESPONSE_MESSAGE_BODY_LENGTH);
         bodyByteBuf.writeShortLE(reserve1);
         bodyByteBuf.writeShortLE(reserve2);
-        setBody(bodyByteBuf);
+        //setBody(bodyByteBuf);
         return this;
     }
 
@@ -54,6 +54,6 @@ public class SignInResponseMessageBody extends ChargingPileResponseMessageBody {
 
     @Override
     public CommandEnum getCommand() {
-        return CommandEnum.SIGN_RESPONSE_CMD;
+        return CommandEnum.SIGN_SERVER_CMD;
     }
 }

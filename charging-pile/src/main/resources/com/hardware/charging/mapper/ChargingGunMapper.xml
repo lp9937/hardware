@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hardware.charging.mapper.ChargingGunMapper">
+  <resultMap id="BaseResultMap" type="com.hardware.charging.pojo.model.ChargingGun">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="charging_pile_id" jdbcType="INTEGER" property="chargingPileId" />
+    <result column="charging_gun_type" jdbcType="TINYINT" property="chargingGunType" />
+    <result column="charging_gun_status" jdbcType="TINYINT" property="chargingGunStatus" />
+    <result column="connection_status" jdbcType="TINYINT" property="connectionStatus" />
+    <result column="charging_voltage" jdbcType="INTEGER" property="chargingVoltage" />
+    <result column="charging_current" jdbcType="INTEGER" property="chargingCurrent" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
+    <result column="update_user_id" jdbcType="INTEGER" property="updateUserId" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, charging_pile_id, charging_gun_type, charging_gun_status, connection_status, 
+    charging_voltage, charging_current, create_date, update_date, create_user_id, update_user_id, 
+    is_delete
+  </sql>
+  <select id="selectByExample" parameterType="com.hardware.charging.pojo.model.ChargingGunExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hardware_charging_gun
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from hardware_charging_gun
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from hardware_charging_gun
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hardware.charging.pojo.model.ChargingGunExample">
+    delete from hardware_charging_gun
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.hardware.charging.pojo.model.ChargingGun" useGeneratedKeys="true">
+    insert into hardware_charging_gun (charging_pile_id, charging_gun_type, 
+      charging_gun_status, connection_status, charging_voltage, 
+      charging_current, create_date, update_date, 
+      create_user_id, update_user_id, is_delete
+      )
+    values (#{chargingPileId,jdbcType=INTEGER}, #{chargingGunType,jdbcType=TINYINT}, 
+      #{chargingGunStatus,jdbcType=TINYINT}, #{connectionStatus,jdbcType=TINYINT}, #{chargingVoltage,jdbcType=INTEGER}, 
+      #{chargingCurrent,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{createUserId,jdbcType=INTEGER}, #{updateUserId,jdbcType=INTEGER}, #{isDelete,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.hardware.charging.pojo.model.ChargingGun" useGeneratedKeys="true">
+    insert into hardware_charging_gun
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="chargingPileId != null">
+        charging_pile_id,
+      </if>
+      <if test="chargingGunType != null">
+        charging_gun_type,
+      </if>
+      <if test="chargingGunStatus != null">
+        charging_gun_status,
+      </if>
+      <if test="connectionStatus != null">
+        connection_status,
+      </if>
+      <if test="chargingVoltage != null">
+        charging_voltage,
+      </if>
+      <if test="chargingCurrent != null">
+        charging_current,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="createUserId != null">
+        create_user_id,
+      </if>
+      <if test="updateUserId != null">
+        update_user_id,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="chargingPileId != null">
+        #{chargingPileId,jdbcType=INTEGER},
+      </if>
+      <if test="chargingGunType != null">
+        #{chargingGunType,jdbcType=TINYINT},
+      </if>
+      <if test="chargingGunStatus != null">
+        #{chargingGunStatus,jdbcType=TINYINT},
+      </if>
+      <if test="connectionStatus != null">
+        #{connectionStatus,jdbcType=TINYINT},
+      </if>
+      <if test="chargingVoltage != null">
+        #{chargingVoltage,jdbcType=INTEGER},
+      </if>
+      <if test="chargingCurrent != null">
+        #{chargingCurrent,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="updateUserId != null">
+        #{updateUserId,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hardware.charging.pojo.model.ChargingGunExample" resultType="java.lang.Long">
+    select count(*) from hardware_charging_gun
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update hardware_charging_gun
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.chargingPileId != null">
+        charging_pile_id = #{record.chargingPileId,jdbcType=INTEGER},
+      </if>
+      <if test="record.chargingGunType != null">
+        charging_gun_type = #{record.chargingGunType,jdbcType=TINYINT},
+      </if>
+      <if test="record.chargingGunStatus != null">
+        charging_gun_status = #{record.chargingGunStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.connectionStatus != null">
+        connection_status = #{record.connectionStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.chargingVoltage != null">
+        charging_voltage = #{record.chargingVoltage,jdbcType=INTEGER},
+      </if>
+      <if test="record.chargingCurrent != null">
+        charging_current = #{record.chargingCurrent,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createUserId != null">
+        create_user_id = #{record.createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateUserId != null">
+        update_user_id = #{record.updateUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.isDelete != null">
+        is_delete = #{record.isDelete,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update hardware_charging_gun
+    set id = #{record.id,jdbcType=INTEGER},
+      charging_pile_id = #{record.chargingPileId,jdbcType=INTEGER},
+      charging_gun_type = #{record.chargingGunType,jdbcType=TINYINT},
+      charging_gun_status = #{record.chargingGunStatus,jdbcType=TINYINT},
+      connection_status = #{record.connectionStatus,jdbcType=TINYINT},
+      charging_voltage = #{record.chargingVoltage,jdbcType=INTEGER},
+      charging_current = #{record.chargingCurrent,jdbcType=INTEGER},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      create_user_id = #{record.createUserId,jdbcType=INTEGER},
+      update_user_id = #{record.updateUserId,jdbcType=INTEGER},
+      is_delete = #{record.isDelete,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hardware.charging.pojo.model.ChargingGun">
+    update hardware_charging_gun
+    <set>
+      <if test="chargingPileId != null">
+        charging_pile_id = #{chargingPileId,jdbcType=INTEGER},
+      </if>
+      <if test="chargingGunType != null">
+        charging_gun_type = #{chargingGunType,jdbcType=TINYINT},
+      </if>
+      <if test="chargingGunStatus != null">
+        charging_gun_status = #{chargingGunStatus,jdbcType=TINYINT},
+      </if>
+      <if test="connectionStatus != null">
+        connection_status = #{connectionStatus,jdbcType=TINYINT},
+      </if>
+      <if test="chargingVoltage != null">
+        charging_voltage = #{chargingVoltage,jdbcType=INTEGER},
+      </if>
+      <if test="chargingCurrent != null">
+        charging_current = #{chargingCurrent,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null">
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="updateUserId != null">
+        update_user_id = #{updateUserId,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hardware.charging.pojo.model.ChargingGun">
+    update hardware_charging_gun
+    set charging_pile_id = #{chargingPileId,jdbcType=INTEGER},
+      charging_gun_type = #{chargingGunType,jdbcType=TINYINT},
+      charging_gun_status = #{chargingGunStatus,jdbcType=TINYINT},
+      connection_status = #{connectionStatus,jdbcType=TINYINT},
+      charging_voltage = #{chargingVoltage,jdbcType=INTEGER},
+      charging_current = #{chargingCurrent,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      update_user_id = #{updateUserId,jdbcType=INTEGER},
+      is_delete = #{isDelete,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,4 +1,4 @@
-package com.hardware.server.service.charging.message.body.request;
+package com.hardware.server.service.charging.message.body.client;
 
 import com.hardware.common.annotation.MessageRegister;
 import com.hardware.common.enums.CommandEnum;
@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 @MessageRegister
-public class StatusRequestMessageBody extends
-        ChargingPileRequestMessageBody {
+public class StatusClientMessageBody extends
+        ChargingPileClientMessageBody {
     /**
      * 预留字段
      * 占2字节
@@ -497,7 +497,7 @@ public class StatusRequestMessageBody extends
         this.cardNumber = cardNumber;
     }
 
-    public ChargingPileRequestMessageBody setCardNumber(ByteBuf byteBuf){
+    public ChargingPileClientMessageBody setCardNumber(ByteBuf byteBuf){
         if(cardNumber==null){
             cardNumber=new byte[MessageFieldConst.CARD_NUMBER_FIELD_LENGTH];
         }
@@ -570,7 +570,7 @@ public class StatusRequestMessageBody extends
     }
 
     @Override
-    public StatusRequestMessageBody decoder() {
+    public StatusClientMessageBody decoder() {
         ByteBuf body=getBody();
         setReserve1(body.readUnsignedShortLE());
         setReserve2(body.readUnsignedShortLE());

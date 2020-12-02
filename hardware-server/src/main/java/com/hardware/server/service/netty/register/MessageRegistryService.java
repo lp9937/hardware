@@ -3,10 +3,8 @@ package com.hardware.server.service.netty.register;
 import com.hardware.common.annotation.MessageRegister;
 import com.hardware.server.service.netty.message.NettyMessageBody;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import java.lang.annotation.Annotation;
 import java.util.List;
 
 @Component

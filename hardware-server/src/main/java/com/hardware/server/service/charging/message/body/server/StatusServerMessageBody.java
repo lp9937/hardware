@@ -1,4 +1,4 @@
-package com.hardware.server.service.charging.message.body.response;
+package com.hardware.server.service.charging.message.body.server;
 
 import com.hardware.common.annotation.MessageRegister;
 import com.hardware.common.enums.CommandEnum;
@@ -7,10 +7,10 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import org.springframework.stereotype.Component;
 
-@Component
-@MessageRegister
-public class StatusResponseMessageBody extends
-        ChargingPileResponseMessageBody {
+//@Component
+//@MessageRegister
+public class StatusServerMessageBody extends
+        ChargingPileServerMessageBody {
     /**
      * 占2字节
      */
@@ -98,15 +98,15 @@ public class StatusResponseMessageBody extends
     }
 
     @Override
-    public ChargingPileResponseMessageBody encoder() {
-        ByteBuf bodyByteBuf= Unpooled.buffer(getLength());
+    public ChargingPileServerMessageBody encoder(ByteBuf bodyByteBuf) {
+        //ByteBuf bodyByteBuf= Unpooled.buffer(getLength());
         bodyByteBuf.writeShortLE(getReserve1());
         bodyByteBuf.writeShortLE(getReserve2());
         bodyByteBuf.writeByte(getChargingPort());
         bodyByteBuf.writeBytes(getCardNumber());
         bodyByteBuf.writeIntLE((int)getBalance());
         bodyByteBuf.writeIntLE((int)getCurrentChargingCharge());
-        setBody(bodyByteBuf);
+        //setBody(bodyByteBuf);
         return this;
     }
 
@@ -117,6 +117,6 @@ public class StatusResponseMessageBody extends
 
     @Override
     public CommandEnum getCommand() {
-        return CommandEnum.STATE_RESPONSE_CMD;
+        return CommandEnum.STATE_SERVER_CMD;
     }
 }

@@ -3,17 +3,17 @@ package com.hardware.server.service.charging.handler;
 import com.hardware.common.annotation.MessageHandleRegister;
 import com.hardware.common.enums.CommandEnum;
 import com.hardware.server.service.charging.message.ChargingPileMessageHead;
-import com.hardware.server.service.charging.message.body.request.SignInRequestMessageBody;
-import com.hardware.server.service.charging.message.body.response.SignInResponseMessageBody;
+import com.hardware.server.service.charging.message.body.client.SignInClientMessageBody;
+import com.hardware.server.service.charging.message.body.server.SignInServerMessageBody;
 import org.springframework.stereotype.Component;
 
 @Component
 @MessageHandleRegister("CHARGING_PILE")
 public class SignInMessageHandler extends
-        AbstractChargingPileMessageHandler<SignInRequestMessageBody,SignInResponseMessageBody> {
+        AbstractChargingPileMessageHandler<SignInClientMessageBody, SignInServerMessageBody> {
     @Override
     public CommandEnum getCommand() {
-        return CommandEnum.SIGN_RESPONSE_CMD;
+        return CommandEnum.SIGN_SERVER_CMD;
     }
 
     @Override
@@ -24,11 +24,11 @@ public class SignInMessageHandler extends
     @Override
     protected ChargingPileMessageHead headHandle(
             ChargingPileMessageHead head) {
-        return head.setCommandType(CommandEnum.SIGN_RESPONSE_CMD.getCode());
+        return head.setCommandType(CommandEnum.SIGN_SERVER_CMD.getCode());
     }
 
     @Override
-    protected SignInResponseMessageBody bodyHandle(SignInRequestMessageBody body) {
-        return new SignInResponseMessageBody();
+    protected SignInServerMessageBody bodyHandle(SignInClientMessageBody body) {
+        return new SignInServerMessageBody();
     }
 }

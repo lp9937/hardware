@@ -1,4 +1,4 @@
-package com.hardware.server.service.charging.message.body.request;
+package com.hardware.server.service.charging.message.body.client;
 
 import com.hardware.common.annotation.MessageRegister;
 import com.hardware.common.enums.CommandEnum;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @MessageRegister
-public class SignInRequestMessageBody extends ChargingPileRequestMessageBody {
+public class SignInClientMessageBody extends ChargingPileClientMessageBody {
     private final static int RESERVE_5_6_7_FIELD_LENGTH =8;
     /**
      * 预留字段
@@ -265,7 +265,7 @@ public class SignInRequestMessageBody extends ChargingPileRequestMessageBody {
         byteBuf.readBytes(reserve7);
     }
     @Override
-    public SignInRequestMessageBody decoder() {
+    public SignInClientMessageBody decoder() {
         ByteBuf body=getBody();
         setReserve1(body.readShortLE());
         setReserve2(body.readShortLE());

@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hardware.charging.mapper.ChargingRuleMapper">
+  <resultMap id="BaseResultMap" type="com.hardware.charging.pojo.model.ChargingRule">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="parking_id" jdbcType="INTEGER" property="parkingId" />
+    <result column="section_start" jdbcType="TIME" property="sectionStart" />
+    <result column="section_end" jdbcType="TIME" property="sectionEnd" />
+    <result column="sub_serial_number" jdbcType="VARCHAR" property="subSerialNumber" />
+    <result column="charge_unit" jdbcType="TINYINT" property="chargeUnit" />
+    <result column="unit_cost" jdbcType="DECIMAL" property="unitCost" />
+    <result column="ceiling_cost" jdbcType="DECIMAL" property="ceilingCost" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
+    <result column="update_user_id" jdbcType="INTEGER" property="updateUserId" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, parking_id, section_start, section_end, sub_serial_number, charge_unit, unit_cost, 
+    ceiling_cost, create_date, update_date, create_user_id, update_user_id, is_delete
+  </sql>
+  <select id="selectByExample" parameterType="com.hardware.charging.pojo.model.ChargingRuleExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hardware_charging_rule
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from hardware_charging_rule
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from hardware_charging_rule
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hardware.charging.pojo.model.ChargingRuleExample">
+    delete from hardware_charging_rule
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.hardware.charging.pojo.model.ChargingRule" useGeneratedKeys="true">
+    insert into hardware_charging_rule (parking_id, section_start, section_end, 
+      sub_serial_number, charge_unit, unit_cost, 
+      ceiling_cost, create_date, update_date, 
+      create_user_id, update_user_id, is_delete
+      )
+    values (#{parkingId,jdbcType=INTEGER}, #{sectionStart,jdbcType=TIME}, #{sectionEnd,jdbcType=TIME}, 
+      #{subSerialNumber,jdbcType=VARCHAR}, #{chargeUnit,jdbcType=TINYINT}, #{unitCost,jdbcType=DECIMAL}, 
+      #{ceilingCost,jdbcType=DECIMAL}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{createUserId,jdbcType=INTEGER}, #{updateUserId,jdbcType=INTEGER}, #{isDelete,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.hardware.charging.pojo.model.ChargingRule" useGeneratedKeys="true">
+    insert into hardware_charging_rule
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="parkingId != null">
+        parking_id,
+      </if>
+      <if test="sectionStart != null">
+        section_start,
+      </if>
+      <if test="sectionEnd != null">
+        section_end,
+      </if>
+      <if test="subSerialNumber != null">
+        sub_serial_number,
+      </if>
+      <if test="chargeUnit != null">
+        charge_unit,
+      </if>
+      <if test="unitCost != null">
+        unit_cost,
+      </if>
+      <if test="ceilingCost != null">
+        ceiling_cost,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="createUserId != null">
+        create_user_id,
+      </if>
+      <if test="updateUserId != null">
+        update_user_id,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="parkingId != null">
+        #{parkingId,jdbcType=INTEGER},
+      </if>
+      <if test="sectionStart != null">
+        #{sectionStart,jdbcType=TIME},
+      </if>
+      <if test="sectionEnd != null">
+        #{sectionEnd,jdbcType=TIME},
+      </if>
+      <if test="subSerialNumber != null">
+        #{subSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeUnit != null">
+        #{chargeUnit,jdbcType=TINYINT},
+      </if>
+      <if test="unitCost != null">
+        #{unitCost,jdbcType=DECIMAL},
+      </if>
+      <if test="ceilingCost != null">
+        #{ceilingCost,jdbcType=DECIMAL},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="updateUserId != null">
+        #{updateUserId,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hardware.charging.pojo.model.ChargingRuleExample" resultType="java.lang.Long">
+    select count(*) from hardware_charging_rule
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update hardware_charging_rule
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.parkingId != null">
+        parking_id = #{record.parkingId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sectionStart != null">
+        section_start = #{record.sectionStart,jdbcType=TIME},
+      </if>
+      <if test="record.sectionEnd != null">
+        section_end = #{record.sectionEnd,jdbcType=TIME},
+      </if>
+      <if test="record.subSerialNumber != null">
+        sub_serial_number = #{record.subSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chargeUnit != null">
+        charge_unit = #{record.chargeUnit,jdbcType=TINYINT},
+      </if>
+      <if test="record.unitCost != null">
+        unit_cost = #{record.unitCost,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ceilingCost != null">
+        ceiling_cost = #{record.ceilingCost,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createUserId != null">
+        create_user_id = #{record.createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateUserId != null">
+        update_user_id = #{record.updateUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.isDelete != null">
+        is_delete = #{record.isDelete,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update hardware_charging_rule
+    set id = #{record.id,jdbcType=INTEGER},
+      parking_id = #{record.parkingId,jdbcType=INTEGER},
+      section_start = #{record.sectionStart,jdbcType=TIME},
+      section_end = #{record.sectionEnd,jdbcType=TIME},
+      sub_serial_number = #{record.subSerialNumber,jdbcType=VARCHAR},
+      charge_unit = #{record.chargeUnit,jdbcType=TINYINT},
+      unit_cost = #{record.unitCost,jdbcType=DECIMAL},
+      ceiling_cost = #{record.ceilingCost,jdbcType=DECIMAL},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      create_user_id = #{record.createUserId,jdbcType=INTEGER},
+      update_user_id = #{record.updateUserId,jdbcType=INTEGER},
+      is_delete = #{record.isDelete,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hardware.charging.pojo.model.ChargingRule">
+    update hardware_charging_rule
+    <set>
+      <if test="parkingId != null">
+        parking_id = #{parkingId,jdbcType=INTEGER},
+      </if>
+      <if test="sectionStart != null">
+        section_start = #{sectionStart,jdbcType=TIME},
+      </if>
+      <if test="sectionEnd != null">
+        section_end = #{sectionEnd,jdbcType=TIME},
+      </if>
+      <if test="subSerialNumber != null">
+        sub_serial_number = #{subSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeUnit != null">
+        charge_unit = #{chargeUnit,jdbcType=TINYINT},
+      </if>
+      <if test="unitCost != null">
+        unit_cost = #{unitCost,jdbcType=DECIMAL},
+      </if>
+      <if test="ceilingCost != null">
+        ceiling_cost = #{ceilingCost,jdbcType=DECIMAL},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null">
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="updateUserId != null">
+        update_user_id = #{updateUserId,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hardware.charging.pojo.model.ChargingRule">
+    update hardware_charging_rule
+    set parking_id = #{parkingId,jdbcType=INTEGER},
+      section_start = #{sectionStart,jdbcType=TIME},
+      section_end = #{sectionEnd,jdbcType=TIME},
+      sub_serial_number = #{subSerialNumber,jdbcType=VARCHAR},
+      charge_unit = #{chargeUnit,jdbcType=TINYINT},
+      unit_cost = #{unitCost,jdbcType=DECIMAL},
+      ceiling_cost = #{ceilingCost,jdbcType=DECIMAL},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      update_user_id = #{updateUserId,jdbcType=INTEGER},
+      is_delete = #{isDelete,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

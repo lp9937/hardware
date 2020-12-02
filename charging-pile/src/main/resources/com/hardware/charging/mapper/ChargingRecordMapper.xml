@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hardware.charging.mapper.ChargingRecordMapper">
+  <resultMap id="BaseResultMap" type="com.hardware.charging.pojo.model.ChargingRecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="charging_gun_id" jdbcType="INTEGER" property="chargingGunId" />
+    <result column="charging_start_time" jdbcType="TIMESTAMP" property="chargingStartTime" />
+    <result column="charging_end_time" jdbcType="TIMESTAMP" property="chargingEndTime" />
+    <result column="order_number" jdbcType="VARCHAR" property="orderNumber" />
+    <result column="charging_type" jdbcType="TINYINT" property="chargingType" />
+    <result column="charge_rule_id" jdbcType="INTEGER" property="chargeRuleId" />
+    <result column="charging_appointment_time" jdbcType="TIMESTAMP" property="chargingAppointmentTime" />
+    <result column="charging_start_mode" jdbcType="TINYINT" property="chargingStartMode" />
+    <result column="charging_strategy" jdbcType="TINYINT" property="chargingStrategy" />
+    <result column="degree_before_charging" jdbcType="DECIMAL" property="degreeBeforeCharging" />
+    <result column="current_degree" jdbcType="DECIMAL" property="currentDegree" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
+    <result column="update_user_id" jdbcType="INTEGER" property="updateUserId" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, charging_gun_id, charging_start_time, charging_end_time, order_number, charging_type, 
+    charge_rule_id, charging_appointment_time, charging_start_mode, charging_strategy, 
+    degree_before_charging, current_degree, create_date, update_date, create_user_id, 
+    update_user_id, is_delete
+  </sql>
+  <select id="selectByExample" parameterType="com.hardware.charging.pojo.model.ChargingRecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hardware_charging_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from hardware_charging_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from hardware_charging_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hardware.charging.pojo.model.ChargingRecordExample">
+    delete from hardware_charging_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.hardware.charging.pojo.model.ChargingRecord" useGeneratedKeys="true">
+    insert into hardware_charging_record (charging_gun_id, charging_start_time, 
+      charging_end_time, order_number, charging_type, 
+      charge_rule_id, charging_appointment_time, 
+      charging_start_mode, charging_strategy, degree_before_charging, 
+      current_degree, create_date, update_date, 
+      create_user_id, update_user_id, is_delete
+      )
+    values (#{chargingGunId,jdbcType=INTEGER}, #{chargingStartTime,jdbcType=TIMESTAMP}, 
+      #{chargingEndTime,jdbcType=TIMESTAMP}, #{orderNumber,jdbcType=VARCHAR}, #{chargingType,jdbcType=TINYINT}, 
+      #{chargeRuleId,jdbcType=INTEGER}, #{chargingAppointmentTime,jdbcType=TIMESTAMP}, 
+      #{chargingStartMode,jdbcType=TINYINT}, #{chargingStrategy,jdbcType=TINYINT}, #{degreeBeforeCharging,jdbcType=DECIMAL}, 
+      #{currentDegree,jdbcType=DECIMAL}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{createUserId,jdbcType=INTEGER}, #{updateUserId,jdbcType=INTEGER}, #{isDelete,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.hardware.charging.pojo.model.ChargingRecord" useGeneratedKeys="true">
+    insert into hardware_charging_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="chargingGunId != null">
+        charging_gun_id,
+      </if>
+      <if test="chargingStartTime != null">
+        charging_start_time,
+      </if>
+      <if test="chargingEndTime != null">
+        charging_end_time,
+      </if>
+      <if test="orderNumber != null">
+        order_number,
+      </if>
+      <if test="chargingType != null">
+        charging_type,
+      </if>
+      <if test="chargeRuleId != null">
+        charge_rule_id,
+      </if>
+      <if test="chargingAppointmentTime != null">
+        charging_appointment_time,
+      </if>
+      <if test="chargingStartMode != null">
+        charging_start_mode,
+      </if>
+      <if test="chargingStrategy != null">
+        charging_strategy,
+      </if>
+      <if test="degreeBeforeCharging != null">
+        degree_before_charging,
+      </if>
+      <if test="currentDegree != null">
+        current_degree,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="createUserId != null">
+        create_user_id,
+      </if>
+      <if test="updateUserId != null">
+        update_user_id,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="chargingGunId != null">
+        #{chargingGunId,jdbcType=INTEGER},
+      </if>
+      <if test="chargingStartTime != null">
+        #{chargingStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="chargingEndTime != null">
+        #{chargingEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderNumber != null">
+        #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="chargingType != null">
+        #{chargingType,jdbcType=TINYINT},
+      </if>
+      <if test="chargeRuleId != null">
+        #{chargeRuleId,jdbcType=INTEGER},
+      </if>
+      <if test="chargingAppointmentTime != null">
+        #{chargingAppointmentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="chargingStartMode != null">
+        #{chargingStartMode,jdbcType=TINYINT},
+      </if>
+      <if test="chargingStrategy != null">
+        #{chargingStrategy,jdbcType=TINYINT},
+      </if>
+      <if test="degreeBeforeCharging != null">
+        #{degreeBeforeCharging,jdbcType=DECIMAL},
+      </if>
+      <if test="currentDegree != null">
+        #{currentDegree,jdbcType=DECIMAL},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="updateUserId != null">
+        #{updateUserId,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hardware.charging.pojo.model.ChargingRecordExample" resultType="java.lang.Long">
+    select count(*) from hardware_charging_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update hardware_charging_record
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.chargingGunId != null">
+        charging_gun_id = #{record.chargingGunId,jdbcType=INTEGER},
+      </if>
+      <if test="record.chargingStartTime != null">
+        charging_start_time = #{record.chargingStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.chargingEndTime != null">
+        charging_end_time = #{record.chargingEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderNumber != null">
+        order_number = #{record.orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chargingType != null">
+        charging_type = #{record.chargingType,jdbcType=TINYINT},
+      </if>
+      <if test="record.chargeRuleId != null">
+        charge_rule_id = #{record.chargeRuleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.chargingAppointmentTime != null">
+        charging_appointment_time = #{record.chargingAppointmentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.chargingStartMode != null">
+        charging_start_mode = #{record.chargingStartMode,jdbcType=TINYINT},
+      </if>
+      <if test="record.chargingStrategy != null">
+        charging_strategy = #{record.chargingStrategy,jdbcType=TINYINT},
+      </if>
+      <if test="record.degreeBeforeCharging != null">
+        degree_before_charging = #{record.degreeBeforeCharging,jdbcType=DECIMAL},
+      </if>
+      <if test="record.currentDegree != null">
+        current_degree = #{record.currentDegree,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createUserId != null">
+        create_user_id = #{record.createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateUserId != null">
+        update_user_id = #{record.updateUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.isDelete != null">
+        is_delete = #{record.isDelete,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update hardware_charging_record
+    set id = #{record.id,jdbcType=INTEGER},
+      charging_gun_id = #{record.chargingGunId,jdbcType=INTEGER},
+      charging_start_time = #{record.chargingStartTime,jdbcType=TIMESTAMP},
+      charging_end_time = #{record.chargingEndTime,jdbcType=TIMESTAMP},
+      order_number = #{record.orderNumber,jdbcType=VARCHAR},
+      charging_type = #{record.chargingType,jdbcType=TINYINT},
+      charge_rule_id = #{record.chargeRuleId,jdbcType=INTEGER},
+      charging_appointment_time = #{record.chargingAppointmentTime,jdbcType=TIMESTAMP},
+      charging_start_mode = #{record.chargingStartMode,jdbcType=TINYINT},
+      charging_strategy = #{record.chargingStrategy,jdbcType=TINYINT},
+      degree_before_charging = #{record.degreeBeforeCharging,jdbcType=DECIMAL},
+      current_degree = #{record.currentDegree,jdbcType=DECIMAL},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      create_user_id = #{record.createUserId,jdbcType=INTEGER},
+      update_user_id = #{record.updateUserId,jdbcType=INTEGER},
+      is_delete = #{record.isDelete,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hardware.charging.pojo.model.ChargingRecord">
+    update hardware_charging_record
+    <set>
+      <if test="chargingGunId != null">
+        charging_gun_id = #{chargingGunId,jdbcType=INTEGER},
+      </if>
+      <if test="chargingStartTime != null">
+        charging_start_time = #{chargingStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="chargingEndTime != null">
+        charging_end_time = #{chargingEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderNumber != null">
+        order_number = #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="chargingType != null">
+        charging_type = #{chargingType,jdbcType=TINYINT},
+      </if>
+      <if test="chargeRuleId != null">
+        charge_rule_id = #{chargeRuleId,jdbcType=INTEGER},
+      </if>
+      <if test="chargingAppointmentTime != null">
+        charging_appointment_time = #{chargingAppointmentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="chargingStartMode != null">
+        charging_start_mode = #{chargingStartMode,jdbcType=TINYINT},
+      </if>
+      <if test="chargingStrategy != null">
+        charging_strategy = #{chargingStrategy,jdbcType=TINYINT},
+      </if>
+      <if test="degreeBeforeCharging != null">
+        degree_before_charging = #{degreeBeforeCharging,jdbcType=DECIMAL},
+      </if>
+      <if test="currentDegree != null">
+        current_degree = #{currentDegree,jdbcType=DECIMAL},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null">
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="updateUserId != null">
+        update_user_id = #{updateUserId,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hardware.charging.pojo.model.ChargingRecord">
+    update hardware_charging_record
+    set charging_gun_id = #{chargingGunId,jdbcType=INTEGER},
+      charging_start_time = #{chargingStartTime,jdbcType=TIMESTAMP},
+      charging_end_time = #{chargingEndTime,jdbcType=TIMESTAMP},
+      order_number = #{orderNumber,jdbcType=VARCHAR},
+      charging_type = #{chargingType,jdbcType=TINYINT},
+      charge_rule_id = #{chargeRuleId,jdbcType=INTEGER},
+      charging_appointment_time = #{chargingAppointmentTime,jdbcType=TIMESTAMP},
+      charging_start_mode = #{chargingStartMode,jdbcType=TINYINT},
+      charging_strategy = #{chargingStrategy,jdbcType=TINYINT},
+      degree_before_charging = #{degreeBeforeCharging,jdbcType=DECIMAL},
+      current_degree = #{currentDegree,jdbcType=DECIMAL},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      update_user_id = #{updateUserId,jdbcType=INTEGER},
+      is_delete = #{isDelete,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -3,8 +3,8 @@ package com.hardware.server.service.charging.handler;
 import com.hardware.common.annotation.MessageHandleRegister;
 import com.hardware.common.enums.CommandEnum;
 import com.hardware.server.service.charging.message.ChargingPileMessageHead;
-import com.hardware.server.service.charging.message.body.request.HeartbeatRequestMessageBody;
-import com.hardware.server.service.charging.message.body.response.HeartbeatResponseMessageBody;
+import com.hardware.server.service.charging.message.body.client.HeartbeatClientMessageBody;
+import com.hardware.server.service.charging.message.body.server.HeartbeatServerMessageBody;
 import io.netty.util.CharsetUtil;
 import org.springframework.stereotype.Component;
 
@@ -13,12 +13,12 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 @MessageHandleRegister("CHARGING_PILE")
 public class HeartbeatMessageHandler extends
-        AbstractChargingPileMessageHandler<HeartbeatRequestMessageBody,HeartbeatResponseMessageBody> {
+        AbstractChargingPileMessageHandler<HeartbeatClientMessageBody, HeartbeatServerMessageBody> {
     private final ConcurrentHashMap<String,Integer> caches=new ConcurrentHashMap<>();
 
     @Override
     public CommandEnum getCommand() {
-        return CommandEnum.HEARTBEAT_RESPONSE_CMD;
+        return CommandEnum.HEARTBEAT_SERVER_CMD;
     }
 
     @Override
@@ -28,11 +28,11 @@ public class HeartbeatMessageHandler extends
 
     @Override
     protected ChargingPileMessageHead headHandle(ChargingPileMessageHead head){
-        return head.setCommandType(CommandEnum.HEARTBEAT_RESPONSE_CMD.getCode());
+        return head.setCommandType(CommandEnum.HEARTBEAT_SERVER_CMD.getCode());
     }
 
     @Override
-    protected HeartbeatResponseMessageBody bodyHandle(HeartbeatRequestMessageBody body){
+    protected HeartbeatServerMessageBody bodyHandle(HeartbeatClientMessageBody body){
         byte[]code = body.getCode();
         String key=new String(code, CharsetUtil.US_ASCII);
         Integer ack=caches.compute(key,(k,v)->{
@@ -44,7 +44,7 @@ public class HeartbeatMessageHandler extends
             return v;
         });
 
-        HeartbeatResponseMessageBody responseBody=new HeartbeatResponseMessageBody();
+        HeartbeatServerMessageBody responseBody=new HeartbeatServerMessageBody();
         responseBody.setAck(ack);
         return responseBody;
     }

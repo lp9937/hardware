@@ -52,6 +52,38 @@ public final class MessageFieldConst {
      * 状态响应消息消息体长度
      */
     public static final int STATE_RESPONSE_MESSAGE_BODY_LENGTH=45;
+    /**
+     * 开启充电控制命令消息体长度
+     */
+    public static final int START_CHARGING_CONTROL_MESSAGE_BODY_LENGTH=67;
+    /**
+     * 开启充电控制命令响应消息体长度
+     */
+    public static final int START_CHARGING_CONTROL_RESPONSE_MESSAGE_BODY_LENGTH=41;
+    /**
+     * 控制命令消息体长度，不包含命令参数的长度
+     */
+    public static final int CONTROL_COMMAND_MESSAGE_BODY_LENGTH=12;
+    /**
+     * 车辆VIN长度
+     */
+    public static final int VEHICLE_VIN_FILED_LENGTH=17;
+    /**
+     * 车牌号字段长度
+     */
+    public static final int LICENSE_PLATE_NUMBER_FILED_LENGTH=8;
+    /**
+     * 时段电量字段长度
+     */
+    public static final int PERIOD_ELECTRICITY_FILED_LENGTH=48;
+    /**
+     * 电费计价策略命令，定义最大6个时间时段
+     */
+    public static final int ELECTRICITY_PRICE_STRATEGY_UNIT_FILED_LENGTH=6;
+    /**
+     * 电费计价策略命令消息体长度
+     */
+    public static final int ELECTRICITY_PRICE_STRATEGY_MESSAGE_BODY_LENGTH=48;
 
     private MessageFieldConst(){
 
