@@ -4,8 +4,10 @@ import com.hardware.charging.mapper.base.BaseMapper;
 import com.hardware.charging.pojo.model.ChargingRecord;
 import com.hardware.charging.pojo.model.ChargingRecordExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+@Mapper
 public interface ChargingRecordMapper
         extends BaseMapper<ChargingRecord> {
     long countByExample(ChargingRecordExample example);
