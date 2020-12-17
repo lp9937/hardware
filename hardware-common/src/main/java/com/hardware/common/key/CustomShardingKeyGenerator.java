@@ -11,8 +11,10 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 自定义主键生成器
  */
 @Component
-public class CustomShardingKeyGenerator implements ShardingKeyGenerator {
+public class CustomShardingKeyGenerator
+        implements ShardingKeyGenerator {
     private final AtomicInteger key=new AtomicInteger(0);
+
     @Override
     public Comparable<?> generateKey() {
         return key.incrementAndGet();

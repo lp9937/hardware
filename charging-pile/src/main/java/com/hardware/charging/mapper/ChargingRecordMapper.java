@@ -1,11 +1,13 @@
 package com.hardware.charging.mapper;
 
+import com.hardware.charging.mapper.base.BaseMapper;
 import com.hardware.charging.pojo.model.ChargingRecord;
 import com.hardware.charging.pojo.model.ChargingRecordExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface ChargingRecordMapper {
+public interface ChargingRecordMapper
+        extends BaseMapper<ChargingRecord> {
     long countByExample(ChargingRecordExample example);
 
     int deleteByExample(ChargingRecordExample example);

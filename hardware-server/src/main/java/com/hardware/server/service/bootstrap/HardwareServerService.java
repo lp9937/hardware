@@ -19,7 +19,7 @@ public class HardwareServerService {
         log.info("Begin to start hardware service");
         //todo 注册消息
         //todo 启动具体服务
-        nettyServiceManager.startUp();
+//        nettyServiceManager.startUp();
         log.info("Hardware service started");
     }
 

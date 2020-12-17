@@ -27,7 +27,7 @@ public class StartChargingControlServerMessageBody extends ChargingPileServerMes
      * 1:定时启动充电
      * 2:预约充电
      */
-    private long EffectiveType;
+    private long effectiveType;
     /**
      * 预留字段
      * 占4字节
@@ -103,11 +103,11 @@ public class StartChargingControlServerMessageBody extends ChargingPileServerMes
     }
 
     public long getEffectiveType() {
-        return EffectiveType;
+        return effectiveType;
     }
 
     public void setEffectiveType(long effectiveType) {
-        EffectiveType = effectiveType;
+        this.effectiveType = effectiveType;
     }
 
     public long getReserve3() {

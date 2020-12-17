@@ -1,10 +1,6 @@
 package com.hardware.common.annotation;
 
-import com.hardware.common.enums.HardwareEnum;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.annotation.AliasFor;
-import org.springframework.stereotype.Component;
-
 import java.lang.annotation.*;
 
 /**

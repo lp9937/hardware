@@ -11,4 +11,10 @@ hardware:
           hardware-type: 0
 logging:
   level:
-    root: debug
+    root: info
+
+
+server:
+  port: 1001
+
+

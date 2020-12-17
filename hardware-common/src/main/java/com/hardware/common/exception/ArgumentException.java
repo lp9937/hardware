@@ -2,6 +2,10 @@ package com.hardware.common.exception;
 
 import com.hardware.common.enums.IBaseEnum;
 
+/**
+ * Created by lp on 2020/12/03
+ * 参数异常定义
+ */
 public class ArgumentException extends RuntimeException {
     private IBaseEnum exceptionCode;
     public ArgumentException(IBaseEnum exceptionCode) {

@@ -1,11 +1,13 @@
 package com.hardware.charging.mapper;
 
+import com.hardware.charging.mapper.base.BaseMapper;
 import com.hardware.charging.pojo.model.ChargingGun;
 import com.hardware.charging.pojo.model.ChargingGunExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface ChargingGunMapper {
+public interface ChargingGunMapper
+        extends BaseMapper<ChargingGun> {
     long countByExample(ChargingGunExample example);
 
     int deleteByExample(ChargingGunExample example);

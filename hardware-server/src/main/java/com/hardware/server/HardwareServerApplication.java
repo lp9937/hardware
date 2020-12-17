@@ -4,8 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication
-@ComponentScan(basePackages = {"com.hardware.common,com.hardware.server"})
+@SpringBootApplication(scanBasePackages={"com.hardware.common.utils","com.hardware.server"})
 public class HardwareServerApplication {
 
 	public static void main(String[] args) {
